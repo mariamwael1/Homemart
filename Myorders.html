@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS -->
+</head>
+<body>
+    <header>
+        <h1 id="page-title">Home Market</h1>
+        <nav>
+            <a href="index.html">Marketplace</a>
+            <a href="MyOrders.html">My Orders</a>
+            <a href="basket.html">Basket</a>
+            <a href="login.html">Login</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+
+        <!-- Search Bar -->
+        <input type="text" id="search-bar" placeholder="Search for shops, categories, or products" oninput="searchItems()" />
+
+        <!-- Language Selector -->
+        <select id="language-selector" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ar">Arabic</option>
+        </select>
+    </header>
+
+    <!-- Location Bar under the header -->
+    <div id="location-bar">
+        <p id="location">📍 Choose your location</p>
+    </div>
+
+    <main>
+        <h2>My Orders</h2>
+        <div id="orders-container">
+            <!-- Orders will be dynamically inserted here -->
+        </div>
+
+        <button id="clear-orders" onclick="clearOrders()">Clear Orders</button>
+    </main>
+
+    <footer>
+        <dl>
+            <dt style="color: orange;"><b>Home Market</b></dt>
+            <dd>Home Market offers you an efficient online shopping experience by bringing all local supermarkets.</dd>
+        </dl>
+        <p><a href="#">Terms and Policies</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
