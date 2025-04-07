@@ -10,7 +10,7 @@ body {
 }
 
 header {
-    background: rgb(254, 120, 2);
+    background: rgb(254, 2, 2);
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -52,23 +52,27 @@ nav a:hover {
     padding: 5px;
     margin-left: 20px;
 }
-
-#location-bar {
-    background-color: #f1f1f1;
-    padding: 10px 20px;
+#location-input {
     text-align: left;
-    font-size: 16px;
-    position: fixed;
-    top: 110px;
-    left: 0;
-    right: 0;
-    z-index: 999;
+    margin-top: 20px;
+
 }
 
-#location {
-    font-size: 16px;
+#address-input {
+    text-align: left;
+    width: 300px;
+    height: 100px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
+#location-bar{
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 10px;
 
+}
 #back-button {
     background: #ff5c5c;
     color: white;
@@ -120,7 +124,7 @@ footer {
     padding: 20px;
     text-align: center;
     font-size: 14px;
-    position: fixed;
+    position:relative;
     width: 100%;
     bottom: 0;
 }
@@ -229,7 +233,7 @@ input {
     text-align: left;
 }
 
-/* Basket Items */
+
 .basket-item {
     display: flex;
     justify-content: space-between;
@@ -238,7 +242,6 @@ input {
     border-bottom: 1px solid #ddd;
 }
 
-/* Buttons */
 button {
     background-color: #ff9800;
     color: white;
@@ -267,7 +270,7 @@ button:active {
     text-align: left;
 }
 
-/* Order Items */
+
 .order-item {
     display: flex;
     justify-content: space-between;

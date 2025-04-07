@@ -4,37 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basket</title>
-    <link rel="stylesheet" href="styles.css"> 
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body onload="loadBasket()">
+<body onload="displayBasketItems()">
+    <header>
+        <h1 id="page-title">Home Market</h1>
+        <nav>
+            <a href="index.html">Marketplace</a>
+            <a href="MyOrders.html">My Orders</a>
+            <a href="basket.html">Basket</a>
+            <a href="login.html">Login</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
 
-    <body>
-        <header>
-            <h1 id="page-title">Home Market</h1>
-            <nav>
-                <a href="index.html">Marketplace</a>
-                <a href="MyOrders.html">My Orders</a>
-                <a href="basket.html">Basket</a>
-                <a href="login.html">Login</a>
-                <a href="contact.html">Contact Us</a>
-            </nav>
-    
-            <!-- Search Bar -->
-            <input type="text" id="search-bar" placeholder="Search for shops, categories, or products" oninput="searchItems()" />
-    
-            <!-- Language Selector -->
-            <select id="language-selector" onchange="changeLanguage()">
-                <option value="en">English</option>
-                <option value="ar">Arabic</option>
-            </select>
-        </header>
+        <input type="text" id="search-bar" placeholder="Search for shops, categories, or products" oninput="searchItems()" />
+
+      
+        <select id="language-selector" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ar">Arabic</option>
+        </select>
+    </header>
 
     <main>
         <h2>Your Basket</h2>
-        <div id="basket-container"></div>
+        <div id="basket-items"></div>
+        <p>Total: <span id="total-price">LE 0.00</span></p>
         <button onclick="clearBasket()">Clear Basket</button>
-        <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+        <button id="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
     </main>
 
     <footer>
@@ -44,8 +41,3 @@
         </dl>
         <p><a href="#">Terms and Policies</a></p>
     </footer>
-
-    <script src="script.js"></script>
-
-</body>
-</html>
