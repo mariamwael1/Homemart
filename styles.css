@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background: linear-gradient(to right,#ffffffff, #f7f7f7,  #d4d4d4);
     color: #333;
     text-align: center;
     overflow-x: hidden;
@@ -10,8 +10,8 @@ body {
 }
 
 header {
-    background: rgb(254, 2, 2);
-    padding: 20px;
+    background: radial-gradient(circle at 30% 30%, rgb(240, 73, 101), orange, rgb(240, 73, 101));
+    padding: 40px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,6 +21,7 @@ header {
     left: 0;
     right: 0;
     z-index: 1000;
+   
 }
 
 #page-title {
@@ -69,12 +70,12 @@ nav a:hover {
 }
 #location-bar{
     text-align: left;
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: 10px;
 
 }
 #back-button {
-    background: #ff5c5c;
+    background: #ff6f61;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -120,7 +121,7 @@ nav a:hover {
 }
 
 footer {
-    background: #f1f1f1;
+    background: linear-gradient(to right,#ffffffff, #f7f7f7,  #d4d4d4);
     padding: 20px;
     text-align: center;
     font-size: 14px;
@@ -156,7 +157,7 @@ textarea {
 }
 
 .submit-btn {
-    background: orange;
+    background: #ff6f61;
     color: white;
     padding: 10px;
     border: none;
@@ -174,11 +175,7 @@ textarea {
     height: 300px;
     margin-top: 20px;
 }
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
-}
+
 
 .login-container {
     background: white;
@@ -211,7 +208,7 @@ input {
 }
 
 .login-btn {
-    background: orange;
+    background: #ff6f61;;
     color: white;
     padding: 10px;
     border: none;
@@ -243,7 +240,7 @@ input {
 }
 
 button {
-    background-color: #ff9800;
+    background-color:#ff6f61;;;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -253,11 +250,11 @@ button {
 }
 
 button:hover {
-    background-color: #e68900;
+    background-color: #ff6f61;;
 }
 
 button:active {
-    background-color: #cc7700;
+    background-color:#ff6f61;;
 }
 
 #orders-container {
@@ -277,5 +274,11 @@ button:active {
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+}
+#myorders
+{
+    margin-top: 50px;
+    position:relative;
+
 }
 
