@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Market</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/lang.js" defer></script>
+    <script src="./js/script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1 id="page-title">Home Market</h1>
+        <nav>
+            <a href="index.html" class="active">Marketplace</a>
+            <a href="MyOrders.html">My Orders</a>
+            <a href="basket.html">Basket</a>
+            <a href="login.html">Login</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+
+        <input type="text" id="search-bar" placeholder="Search for shops, categories, or products" oninput="searchItems()">
+
+        <select id="language-selector" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+        </select>
+    </header>
+
+    <main>
+        <section id="location-bar">
+            <span id="location">Choose your location</span>
+            <button onclick="showLocationInput()">Change Location</button>
+        </section>
+
+        <section id="location-input" class="hidden">
+            <textarea id="address-input" placeholder="Enter your address here..."></textarea>
+            <button onclick="saveLocation()">Save Address</button>
+        </section>
+
+        <button id="back-button" onclick="showSupermarkets()" class="hidden">← Back</button>
+
+        <section id="supermarket-list">
+            <h2>Order Now</h2>
+            <div class="supermarket" onclick="showProducts('Seoudi')">
+                <img src="saudi.png" alt="Seoudi Supermarket">
+                <h3>Seoudi</h3>
+            </div>
+            <div class="supermarket" onclick="showProducts('Spinneys')">
+                <img src="spinneys.png" alt="Spinneys Supermarket">
+                <h3>Spinneys</h3>
+            </div>
+            <div class="supermarket" onclick="showProducts('Mahmoud Elfar')">
+                <img src="mahmoud.webp" alt="Mahmoud Elfar Supermarket">
+                <h3>Mahmoud Elfar</h3>
+            </div>
+            <div class="supermarket" onclick="showProducts('Carrefour')">
+                <img src="carfour.png" alt="Carrefour Supermarket">
+                <h3>Carrefour</h3>
+            </div>
+            <div class="supermarket" onclick="showProducts('Metro Market')">
+                <img src="metro.jpg" alt="Metro Market Supermarket">
+                <h3>Metro Market</h3>
+            </div>
+        </section>
+
+        <section id="product-list" class="hidden">
+            <h2 id="supermarket-name"></h2>
+            <div id="products-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <dl>
+            <dt style="color: orange;"><b>Home Market</b></dt>
+            <dd>Home Market offers you an efficient online shopping experience by bringing all local supermarkets together.</dd>
+        </dl>
+        <p><a href="#">Terms and Policies</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Home Market</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/lang.js" defer></script>
+    <script src="./js/script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1 id="page-title">Home Market</h1>
+        <nav>
+            <a href="index.html">Marketplace</a>
+            <a href="MyOrders.html">My Orders</a>
+            <a href="basket.html">Basket</a>
+            <a href="login.html" class="active">Login</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+
+        <input type="text" id="search-bar" placeholder="Search for shops, categories, or products" oninput="searchItems()">
+
+        <select id="language-selector" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+        </select>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <h2>Login to Your Account</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="form-group password-wrapper">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <button type="button" id="toggle-password">👁</button>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+                <p>Don't have an account? <a href="register.html">Register here</a></p>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <dl>
+            <dt style="color: orange;"><b>Home Market</b></dt>
+            <dd>Home Market offers you an efficient online shopping experience by bringing all local supermarkets together.</dd>
+        </dl>
+        <p><a href="#">Terms and Policies</a></p>
+    </footer>
+</body>
+</html>

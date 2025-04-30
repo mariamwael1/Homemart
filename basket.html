@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Basket - Home Market</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/lang.js" defer></script>
+    <script src="./js/script.js" defer></script>
+</head>
+<body onload="displayBasketItems()">
+    <header>
+        <h1 id="page-title">Home Market</h1>
+        <nav>
+            <a href="index.html">Marketplace</a>
+            <a href="MyOrders.html">My Orders</a>
+            <a href="basket.html" class="active">Basket</a>
+            <a href="login.html">Login</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+
+        <input type="text" id="search-bar" placeholder="Search for shops, categories, or products" oninput="searchItems()">
+
+        <select id="language-selector" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+        </select>
+    </header>
+
+    <main>
+        <h2>Your Basket</h2>
+
+        <div id="basket-items" class="basket-items"></div>
+
+        <div class="basket-summary">
+            <div class="basket-total">
+                <span>Total:</span>
+                <span id="total-price">LE 0.00</span>
+            </div>
+
+            <div class="basket-actions">
+                <button class="clear-btn" onclick="clearBasket()">Clear Basket</button>
+                <button id="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+            <h2>Payment Details</h2>
+
+            <div class="payment-section">
+                <h3>Select Payment Method</h3>
+                <div class="payment-methods">
+                    <div class="payment-option">
+                        <input type="radio" id="credit-card" name="payment-method" value="credit-card" onchange="toggleCardDetails()">
+                        <label for="credit-card">Credit/Debit Card</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="cash" name="payment-method" value="cash" onchange="toggleCardDetails()">
+                        <label for="cash">Cash on Delivery</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="wallet" name="payment-method" value="wallet" onchange="toggleCardDetails()">
+                        <label for="wallet">Mobile Wallet</label>
+                    </div>
+                </div>
+
+                <div id="card-details" class="hidden">
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber()">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry-date">Expiry Date</label>
+                            <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5" oninput="formatExpiryDate()">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-holder">Card Holder Name</label>
+                        <input type="text" id="card-holder" placeholder="John Doe">
+                    </div>
+                </div>
+            </div>
+
+            <div class="delivery-section">
+                <h3>Delivery Address</h3>
+                <textarea id="delivery-address" placeholder="Enter your full delivery address"></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closePaymentModal()">Cancel</button>
+                <button class="confirm-btn" onclick="processPayment()">Confirm Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <dl>
+            <dt style="color: orange;"><b>Home Market</b></dt>
+            <dd>Home Market offers you an efficient online shopping experience by bringing all local supermarkets together.</dd>
+        </dl>
+        <p><a href="#">Terms and Policies</a></p>
+    </footer>
+</body>
+</html>
