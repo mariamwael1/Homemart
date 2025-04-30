@@ -1,26 +1,47 @@
+/* === General Styles === */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
+    padding: 180px 0 0 0; /* top padding to account for fixed header */
+    background: linear-gradient(to right, #ffffff, #f7f7f7, #d4d4d4);
     color: #333;
     text-align: center;
     overflow-x: hidden;
-    padding-top: 110px;
 }
 
+.hidden {
+    display: none;
+}
+
+/* === Header Styles === */
 header {
-    background: rgb(254, 2, 2);
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: radial-gradient(circle at 30% 30%, rgb(240, 73, 101), orange, rgb(240, 73, 101));
+    padding: 40px 20px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header .left-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+header .right-header {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Nice spacing between links */
+}
+
+nav {
+    display: flex;
+    gap: 15px; /* Add space between nav links */
 }
 
 #page-title {
@@ -32,58 +53,54 @@ header {
 nav a {
     color: white;
     text-decoration: none;
-    margin: 0 15px;
+    margin: 0 10px;
+    padding: 8px 15px; /* ADD padding */
     font-size: 16px;
+    border-radius: 5px; /* ADD rounded corners */
+    transition: background-color 0.3s ease; /* ADD smooth hover effect */
 }
 
-nav a:hover {
-    text-decoration: underline;
-}
+nav a:hover,
+nav a.active {
+    background-color: rgba(255, 255, 255, 0.2); /* soft white hover background */
+    text-decoration: none;
+    font-weight: bold;
+}   
 
-#search-bar {
+#search-bar, 
+#language-selector {
+    margin-left: 20px;
     padding: 10px;
-    width: 200px;
     border-radius: 5px;
     border: none;
-    margin-left: 20px;
 }
 
-#language-selector {
-    padding: 5px;
-    margin-left: 20px;
-}
-#location-input {
+/* === Marketplace Styles === */
+#location-bar, #location-input {
     text-align: left;
-    margin-top: 20px;
-
+    margin: 20px;
 }
 
 #address-input {
-    text-align: left;
     width: 300px;
     height: 100px;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
 }
-#location-bar{
-    text-align: left;
-    margin-top: 20px;
-    margin-left: 10px;
 
-}
 #back-button {
-    background: #ff5c5c;
+    background: #ff6f61;
     color: white;
     border: none;
     padding: 10px 15px;
-    cursor: pointer;
+    margin: 20px;
     border-radius: 5px;
-    margin: 70px;
-    
+    cursor: pointer;
 }
 
+/* === Supermarket and Products === */
 .supermarket, .product {
     background: white;
     padding: 15px;
@@ -92,8 +109,7 @@ nav a:hover {
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
     cursor: pointer;
-    transition: 0.3s;
-    
+    transition: transform 0.3s;
 }
 
 .supermarket:hover, .product:hover {
@@ -101,11 +117,10 @@ nav a:hover {
 }
 
 .supermarket img, .product img {
-    width: 200x;
+    width: 200px;
     height: 220px;
     object-fit: contain;
     border-radius: 10px;
-    
 }
 
 #products-container {
@@ -114,25 +129,53 @@ nav a:hover {
     flex-wrap: wrap;
 }
 
-.supermarket h3 {
-    margin-top: 10px;
+/* === Basket Page === */
+.basket-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.basket-summary {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+.basket-total {
+    display: flex;
+    justify-content: space-between;
     font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
-footer {
-    background: #f1f1f1;
-    padding: 20px;
-    text-align: center;
-    font-size: 14px;
-    position:relative;
-    width: 100%;
-    bottom: 0;
+.basket-actions {
+    display: flex;
+    gap: 10px;
 }
 
-footer a {
-    color: #2f5ec2;
-    text-decoration: none;
+#checkout-btn,
+.clear-btn {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
+
+.clear-btn {
+    background-color: #95a5a6;
+}
+
+/* === Contact Page === */
 .contact-container {
     background: white;
     padding: 20px;
@@ -156,7 +199,7 @@ textarea {
 }
 
 .submit-btn {
-    background: orange;
+    background: #ff6f61;
     color: white;
     padding: 10px;
     border: none;
@@ -174,12 +217,8 @@ textarea {
     height: 300px;
     margin-top: 20px;
 }
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
-}
 
+/* === Login Page === */
 .login-container {
     background: white;
     padding: 20px;
@@ -187,14 +226,6 @@ body {
     margin: 50px auto;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
 }
 
 .password-wrapper {
@@ -210,72 +241,15 @@ input {
     cursor: pointer;
 }
 
-.login-btn {
-    background: orange;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.login-btn:hover {
-    background: darkorange;
-}
-#basket-container {
-    background: white;
+/* === Footer Styles === */
+footer {
+    background: linear-gradient(to right, #ffffff, #f7f7f7, #d4d4d4);
     padding: 20px;
-    max-width: 600px;
-    margin: 20px auto;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    font-size: 14px;
+    text-align: center;
 }
 
-
-.basket-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+footer a {
+    color: #2f5ec2;
+    text-decoration: none;
 }
-
-button {
-    background-color: #ff9800;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #e68900;
-}
-
-button:active {
-    background-color: #cc7700;
-}
-
-#orders-container {
-    background: white;
-    padding: 20px;
-    max-width: 600px;
-    margin: 20px auto;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: left;
-}
-
-
-.order-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
