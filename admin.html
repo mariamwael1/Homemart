@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Home Market</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="admin.css">
-    <script src="lang.js"></script>
-    <script src="admin.js" defer></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/admin.css">
+    <script src="./js/lang.js" defer></script>
+    <script src="./js/admin.js" defer></script>
 </head>
 <body>
     <header>
@@ -26,7 +26,7 @@
 
     <main class="admin-container">
         <div id="success-message" class="success-message"></div>
-        
+
         <div class="admin-stats">
             <div class="stat-card">
                 <h3>Total Products</h3>
@@ -45,35 +45,35 @@
                 <p id="active-orders">0</p>
             </div>
         </div>
-        
-        <div class="admin-section">
+
+        <section class="admin-section">
             <h2>Admin Dashboard</h2>
             <p>Manage products, supermarkets, and monitor store operations</p>
-            
+
             <div class="admin-actions">
                 <button class="tab-button active" onclick="showTab('products')">Products</button>
                 <button class="tab-button" onclick="showTab('supermarkets')">Supermarkets</button>
                 <button class="tab-button" onclick="showTab('logs')">Activity Logs</button>
             </div>
-            
-            
+
+            <!-- Products Tab -->
             <div id="products-tab" class="admin-tab">
                 <div class="tab-actions">
                     <button class="action-button" onclick="showProductForm()">Add New Product</button>
                     <button class="action-button" onclick="exportProductsCSV()">Export Products</button>
                     <input type="text" id="product-search" placeholder="Search products..." onkeyup="filterProducts()">
                 </div>
-                
-                <div id="product-form-container" style="display: none;">
+
+                <div id="product-form-container" class="admin-form-container hidden">
                     <h3 id="product-form-title">Add New Product</h3>
                     <form id="product-form" class="admin-form">
                         <input type="hidden" id="product-id">
-                        
+
                         <div class="form-group">
                             <label for="product-name">Product Name</label>
                             <input type="text" id="product-name" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="product-category">Category</label>
                             <select id="product-category" required>
@@ -87,42 +87,41 @@
                                 <option value="Household">Household</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="product-price">Price (EGP)</label>
                             <input type="number" id="product-price" min="0" step="0.01" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="product-stock">Stock Quantity</label>
                             <input type="number" id="product-stock" min="0" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="product-supermarket">Supermarket</label>
                             <select id="product-supermarket" required>
                                 <option value="">Select a supermarket</option>
-                                
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="product-image">Image URL</label>
                             <input type="text" id="product-image" placeholder="http://example.com/image.jpg">
                         </div>
-                        
+
                         <div class="form-group full-width">
                             <label for="product-description">Description</label>
                             <textarea id="product-description" rows="3"></textarea>
                         </div>
-                        
+
                         <div class="form-group full-width">
                             <button type="submit" class="action-button">Save Product</button>
                             <button type="button" class="action-button" onclick="cancelProductForm()">Cancel</button>
                         </div>
                     </form>
                 </div>
-                
+
                 <table class="admin-table" id="products-table">
                     <thead>
                         <tr>
@@ -135,55 +134,53 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                      
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
-            
-            
-            <div id="supermarkets-tab" class="admin-tab" style="display: none;">
+
+            <!-- Supermarkets Tab -->
+            <div id="supermarkets-tab" class="admin-tab hidden">
                 <div class="tab-actions">
                     <button class="action-button" onclick="showSupermarketForm()">Add New Supermarket</button>
                 </div>
-                
-                <div id="supermarket-form-container" style="display: none;">
+
+                <div id="supermarket-form-container" class="admin-form-container hidden">
                     <h3 id="supermarket-form-title">Add New Supermarket</h3>
                     <form id="supermarket-form" class="admin-form">
                         <input type="hidden" id="supermarket-id">
-                        
+
                         <div class="form-group">
                             <label for="supermarket-name">Supermarket Name</label>
                             <input type="text" id="supermarket-name" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="supermarket-address">Address</label>
                             <input type="text" id="supermarket-address" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="supermarket-logo">Logo URL</label>
                             <input type="text" id="supermarket-logo" placeholder="http://example.com/logo.jpg">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="supermarket-delivery-fee">Delivery Fee (EGP)</label>
                             <input type="number" id="supermarket-delivery-fee" min="0" step="0.01" required>
                         </div>
-                        
+
                         <div class="form-group full-width">
                             <label for="supermarket-description">Description</label>
                             <textarea id="supermarket-description" rows="3"></textarea>
                         </div>
-                        
+
                         <div class="form-group full-width">
                             <button type="submit" class="action-button">Save Supermarket</button>
                             <button type="button" class="action-button" onclick="cancelSupermarketForm()">Cancel</button>
                         </div>
                     </form>
                 </div>
-                
+
                 <table class="admin-table" id="supermarkets-table">
                     <thead>
                         <tr>
@@ -195,19 +192,17 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
-            
-           
-            <div id="logs-tab" class="admin-tab" style="display: none;">
+
+            <!-- Logs Tab -->
+            <div id="logs-tab" class="admin-tab hidden">
                 <div class="tab-actions">
                     <button class="action-button" onclick="clearLogs()">Clear Logs</button>
                     <button class="action-button" onclick="exportLogs()">Export Logs</button>
                 </div>
-                
+
                 <table class="admin-table" id="logs-table">
                     <thead>
                         <tr>
@@ -217,17 +212,16 @@
                             <th>Details</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
-        </div>
+        </section>
     </main>
 
     <footer>
         <dl>
             <dt style="color: orange;"><b>Home Market</b></dt>
-            <dd>Home Market offers you an efficient online shopping experience by bringing all local supermarkets.</dd>
+            <dd>Home Market offers you an efficient online shopping experience by bringing all local supermarkets together.</dd>
         </dl>
         <p><a href="#">Terms and Policies</a></p>
     </footer>
