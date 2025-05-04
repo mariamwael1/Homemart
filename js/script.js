@@ -1,32 +1,32 @@
 // Product Database
 const productsData = {
     "Seoudi": [
-        { name: "Apples", price: "LE 4.99", img: "Fresh Apples.jpg", supermarket: "Seoudi" },
-        { name: "Milk", price: "LE 60", img: "Organic Milk.jpg", supermarket: "Seoudi" },
-        { name: "Olive Oil", price: "LE 45.00", img: "Olive Oil.jpg", supermarket: "Seoudi" },
-        { name: "Cereal", price: "LE 25.00", img: "cerel.jpg", supermarket: "Seoudi" },
-        { name: "Bread", price: "LE 20.00", img: "Bread.jpg", supermarket: "Seoudi" },
-        { name: "Water", price: "LE 5.00", img: "water.jpg", supermarket: "Seoudi" },
-        { name: "Redbull", price: "LE 45.00", img: "redbull.jpg", supermarket: "Seoudi" }
+        { name: "Apples", price: "LE 4.99", img: "./images/Fresh Apples.jpg", supermarket: "Seoudi" },
+        { name: "Milk", price: "LE 60", img: "./images/Organic Milk.jpg", supermarket: "Seoudi" },
+        { name: "Olive Oil", price: "LE 45.00", img: "./images/Olive Oil.jpg", supermarket: "Seoudi" },
+        { name: "Cereal", price: "LE 25.00", img: "./images/cerel.jpg", supermarket: "Seoudi" },
+        { name: "Bread", price: "LE 20.00", img: "./images/Bread.jpg", supermarket: "Seoudi" },
+        { name: "Water", price: "LE 5.00", img: "./images/water.jpg", supermarket: "Seoudi" },
+        { name: "Redbull", price: "LE 45.00", img: "./images/redbull.jpg", supermarket: "Seoudi" }
     ],
     "Spinneys": [
-        { name: "Bananas", price: "LE 2.99", img: "banana.jpg", supermarket: "Spinneys" },
-        { name: "Cheese", price: "LE 5.99", img: "cheese.jpg", supermarket: "Spinneys" },
-        { name: "Yogurt", price: "LE 4.49", img: "yogurt.jpg", supermarket: "Spinneys" },
-        { name: "Chicken Breast", price: "LE 40.00", img: "chicken.jpg", supermarket: "Spinneys" }
+        { name: "Bananas", price: "LE 2.99", img: "./images/banana.jpg", supermarket: "Spinneys" },
+        { name: "Cheese", price: "LE 5.99", img: "./images/cheese.jpg", supermarket: "Spinneys" },
+        { name: "Yogurt", price: "LE 4.49", img: "./images/yogurt.jpg", supermarket: "Spinneys" },
+        { name: "Chicken Breast", price: "LE 40.00", img: "./images/chicken.jpg", supermarket: "Spinneys" }
     ],
     "Mahmoud Elfar": [
-        { name: "Tomatoes", price: "LE 20", img: "Tomatos.jpg", supermarket: "Mahmoud Elfar" },
-        { name: "Bread", price: "LE 10", img: "bread.jpg", supermarket: "Mahmoud Elfar" }
+        { name: "Tomatoes", price: "LE 20", img: "./images/Tomatos.jpg", supermarket: "Mahmoud Elfar" },
+        { name: "Bread", price: "LE 10", img: "./images/bread.jpg", supermarket: "Mahmoud Elfar" }
     ],
     "Carrefour": [
-        { name: "Pasta", price: "LE 2.99", img: "Spaghetti.jpg", supermarket: "Carrefour" },
-        { name: "Eggs", price: "LE 3.79", img: "Eggs.jpg", supermarket: "Carrefour" },
-        { name: "Rice", price: "LE 12.00", img: "rice.jpg", supermarket: "Carrefour" }
+        { name: "Pasta", price: "LE 2.99", img: "./images/Spaghetti.jpg", supermarket: "Carrefour" },
+        { name: "Eggs", price: "LE 3.79", img: "./images/Eggs.jpg", supermarket: "Carrefour" },
+        { name: "Rice", price: "LE 12.00", img: "./images/rice.jpg", supermarket: "Carrefour" }
     ],
     "Metro Market": [
-        { name: "Chicken", price: "LE 7.99", img: "chicken.jpg", supermarket: "Metro Market" },
-        { name: "Rice", price: "LE 4.50", img: "rice.jpg", supermarket: "Metro Market" }
+        { name: "Chicken", price: "LE 7.99", img: "./images/chicken.jpg", supermarket: "Metro Market" },
+        { name: "Rice", price: "LE 4.50", img: "./images/rice.jpg", supermarket: "Metro Market" }
     ]
 };
 
