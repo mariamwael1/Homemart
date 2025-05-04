@@ -1,4 +1,5 @@
-// Product Database
+// Product Database supermarkets
+
 const productsData = {
     "Seoudi": [
         { name: "Apples", price: "LE 4.99", img: "./images/Fresh Apples.jpg", supermarket: "Seoudi" },
