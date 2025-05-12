@@ -15,5 +15,9 @@
     "url": "https://github.com/marioz142/Homemart/issues"
   },
   "homepage": "https://github.com/marioz142/Homemart#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongodb": "^6.16.0"
+  }
 }
