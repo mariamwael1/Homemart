@@ -1,0 +1,19 @@
+{
+  "name": "homemart",
+  "version": "1.0.0",
+  "description": "homemart",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marioz142/Homemart.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marioz142/Homemart/issues"
+  },
+  "homepage": "https://github.com/marioz142/Homemart#readme"
+}
