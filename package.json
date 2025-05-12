@@ -18,6 +18,7 @@
   "description": "",
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "express": "^5.1.0"
 =======
 <<<<<<< HEAD
@@ -27,5 +28,12 @@
     "express": "^5.1.0"
 >>>>>>> d4d8948440dfeb029a4f81e0a026166ef8c80d5a
 >>>>>>> 2f775dcce6d400770e5d200f6545a19624d8d38b
+=======
+    "express": "^5.1.0"
+>>>>>>> 7dc7765fd97bd40d5e6d7851638f2eb8b94f8760
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 27112da572fd7c30ef6f5f44aae0c324a0cdef63
