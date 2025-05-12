@@ -17,11 +17,6 @@
   "homepage": "https://github.com/marioz142/Homemart#readme",
   "description": "",
   "dependencies": {
-<<<<<<< HEAD
-    "express": "^5.1.0",
-    "mongodb": "^6.16.0"
-=======
     "express": "^5.1.0"
->>>>>>> d4d8948440dfeb029a4f81e0a026166ef8c80d5a
   }
 }
