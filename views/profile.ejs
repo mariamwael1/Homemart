@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Profile - Home Mart</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/profile.css" />
+  <script src="/js/lang.js" defer></script>
+  <script src="/js/profile.js" defer></script>
+  <script src="/js/main.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1><i class="fa-solid fa-user"></i> My Profile</h1>
+    <%- include('partials/navbar') %>
+  </header>
+
+  <main class="profile-container">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('account')">Account Info</button>
+      <button class="tab-btn" onclick="showTab('address')">Address</button>
+      <button class="tab-btn" onclick="showTab('card')">Credit Card</button>
+      <button class="tab-btn" onclick="showTab('orders')">Order History</button>
+    </div>
+        <% if (error) { %>
+          <div id="alert" class="alert error"><%= error %></div>
+        <% } %>
+
+        <% if (success) { %>
+          <div id="alert" class="alert success"><%= success %></div>
+        <% } %>
+          <!-- ACCOUNT INFO TAB -->
+      <div id="account" class="tab-content active">
+        <h2>Account Info</h2>
+        
+        <form method="POST" action="/profile/update-info">
+          <label for="name">Name:</label>
+          <input id="name" type="text" name="name" value="<%= user.name %>" required />
+
+          <label for="email">Email:</label>
+          <input id="email" type="email" value="<%= user.email %>" disabled />
+
+          <button type="submit">Update Info</button>
+        </form>
+
+        <h3>Change Password</h3>
+            <form id="change-password-form" method="POST" action="/profile/change-password">
+        <label>Current Password:
+          <input type="password" name="currentPassword" required />
+        </label><br />
+        <label>New Password:
+          <input type="password" name="newPassword" required />
+        </label><br />
+        <label>Confirm New Password:
+          <input type="password" name="confirmPassword" required />
+        </label><br />
+        <button type="submit">Change Password</button>
+      </form>
+      </div>
+
+      <!-- ADDRESS TAB -->
+      <div id="address" class="tab-content" style="display:none;">
+        <h2>Address</h2>
+
+        <% if (user.address) { %>
+          <p><strong>Street:</strong> <%= user.address.Streetadd %></p>
+          <p><strong>City:</strong> <%= user.address.City %></p>
+          <p><strong>State:</strong> <%= user.address.State %></p>
+          <p><strong>Zip Code:</strong> <%= user.address.Zipcode %></p>
+          <form action="/profile/remove-address" method="POST">
+          <button type="submit" onclick="return confirm('Are you sure you want to remove your address?')">Remove Address</button>
+          </form>
+        <% } else { %>
+          <p>No address saved.</p>
+        <% } %>
+
+        <form action="/profile/update-address" method="POST" style="margin-top: 1em;">
+          <label>Street:
+            <input type="text" name="Streetadd" value="<%= user.address?.Streetadd || '' %>" required />
+          </label><br />
+          <label>City:
+            <input type="text" name="City" value="<%= user.address?.City || '' %>" required />
+          </label><br />
+          <label>State:
+            <input type="text" name="State" value="<%= user.address?.State || '' %>" required />
+          </label><br />
+          <label>Zip Code:
+            <input type="text" name="Zipcode" value="<%= user.address?.Zipcode || '' %>" required />
+          </label><br />
+          <button type="submit">Update Address</button>
+        </form>
+      </div>
+
+ <!-- CREDIT CARD TAB -->
+    <div id="card" class="tab-content">
+      <h2>Credit Card</h2>
+
+      <% if (user.creditCard) { %>
+        <p>Card ending in ****<%= user.creditCard.cardNumber.slice(-4) %></p>
+        <p>Expiry: <%= user.creditCard.expiryMonth %> / <%= user.creditCard.expiryYear %></p>
+        <p>Name on Card: <%= user.creditCard.nameOnCard %></p>
+        <form action="/profile/remove-card" method="POST">
+        <button type="submit" onclick="return confirm('Are you sure you want to remove your credit card?')">Remove Credit Card</button>
+         </form>
+      <% } else { %>
+        <p>No credit card on file.</p>
+      <% } %>
+
+      <form action="/profile/update-credit-card" method="POST" style="margin-top:1em;">
+        <label>Name on Card:
+          <input type="text" name="nameOnCard" value="<%= user.creditCard?.nameOnCard || '' %>" required />
+        </label><br />
+        <label>Card Number:
+          <input type="text" name="cardNumber" maxlength="16" value="" required />
+        </label><br />
+        <label>Expiry Month:
+          <input type="text" name="expiryMonth" placeholder="MM" maxlength="2" value="" required />
+        </label><br />
+        <label>Expiry Year:
+          <input type="text" name="expiryYear" placeholder="YYYY" maxlength="4" value="" required />
+        </label><br />
+        <button type="submit">Update Credit Card</button>
+      </form>
+    </div>
+
+
+    <!-- ORDERS TAB -->
+ <div id="orders" class="tab-content">
+      <h2>Order History</h2>
+      <% if (orders.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Details</th>
+              <th>Reorder</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% orders.forEach((order, index) => { %>
+              <tr>
+                <td><%= new Date(order.createdAt).toLocaleDateString() %></td>
+                <td><%= order.status %></td>
+                <td><%= order.totalAmount.toFixed(2) %> EGP</td>
+                <td>
+                  <button type="button" onclick="toggleDetails('<%= index %>')">Show</button>
+                </td>
+                <td>
+                  <button type="button" onclick="confirmReorder('<%= order._id %>')">Reorder</button>
+                </td>
+                <td>
+                  <% if (order.status === 'pending') { %>
+                    <form action="/orders/<%= order._id %>/cancel" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order?');">
+                      <button type="submit" class="cancel-btn">Cancel Order</button>
+                    </form>
+                  <% } %>
+                </td>
+              </tr>
+              <tr id="details-<%= index %>" style="display: none;">
+                <td colspan="6">
+                  <strong>Items:</strong>
+                  <ul>
+                    <% order.products.forEach(item => { %>
+                      <li>
+                        <%= item.name %> x <%= item.quantity %> — <%= item.priceAtPurchase.toFixed(2) %> EGP each
+                      </li>
+                    <% }) %>
+                  </ul>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>You haven’t placed any orders yet.</p>
+      <% } %>
+    </div>
+  </main>
+
+  <footer>
+    <p>© Home Mart 2025</p>
+  </footer>
+
+  <script>
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Home Market</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/checkout.css">
+    <script src="/js/main.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+      
+        <%- include('partials/navbar') %>
+        
+     
+          <main class="checkout-container">
+        <h2>Thank you for your purchase, <%= username %>!</h2>
+      <p>Your order has been successfully placed.</p>
+      <p>Payment Method : <%=paymentMethod%> .</p>
+      <a href="/">Back to Home</a>
+          </main>
+
+
+
+    <footer>
+        <dl>
+            <dt style="color: orange;"><b>Home Market</b></dt>
+            <dd>Home Market offers you an efficient online shopping experience by bringing all local supermarkets together.</dd>
+        </dl>
+        <p><a href="#">Terms and Policies</a></p>
+    </footer>
+</body>
+</html>
