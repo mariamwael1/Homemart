@@ -1,249 +1,371 @@
-let products = [
-    { id: 1, name: "Organic Bananas", category: "Fruits & Vegetables", price: 15.99, stock: 50, supermarket: "Seoudi", image: "banana.jpg", description: "Fresh organic bananas" },
-    { id: 2, name: "Fresh Milk", category: "Dairy & Eggs", price: 20.50, stock: 30, supermarket: "Spinneys", image: "milk.jpg", description: "Pasteurized fresh milk" },
-    { id: 3, name: "Whole Wheat Bread", category: "Bakery", price: 12.75, stock: 15, supermarket: "Metro Market", image: "bread.jpg", description: "Freshly baked whole wheat bread" }
-];
 
-let supermarkets = [
-    { id: 1, name: "Seoudi", address: "123 Main St, Cairo", deliveryFee: 15.00, logo: "saudi.jpg", description: "Local supermarket with fresh products", productCount: 120 },
-    { id: 2, name: "Spinneys", address: "456 Park Ave, Cairo", deliveryFee: 20.00, logo: "spinneys.jpg", description: "Premium supermarket with imported goods", productCount: 200 },
-    { id: 3, name: "Metro Market", address: "789 Central Rd, Cairo", deliveryFee: 10.00, logo: "metro.jpg", description: "Affordable supermarket for everyday needs", productCount: 150 },
-    { id: 4, name: "Carrefour", address: "101 Main Mall, Cairo", deliveryFee: 25.00, logo: "carrefoure.jpg", description: "International hypermarket chain", productCount: 300 },
-    { id: 5, name: "Mahmoud Elfar", address: "202 Local St, Cairo", deliveryFee: 12.00, logo: "mahmoud.jpg.webp", description: "Family-owned grocery store", productCount: 80 }
-];
-
-let logs = [];
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadProductsTable();
-    loadSupermarketsTable();
-    loadLogsTable();
-    loadSupermarketDropdown();
-    updateStats();
-
-    document.getElementById('product-form').addEventListener('submit', saveProduct);
-    document.getElementById('supermarket-form').addEventListener('submit', saveSupermarket);
-});
-
-function showTab(tabName) {
+function showTab(tabName, element) {
     document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.add('hidden'));
     document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
     document.getElementById(`${tabName}-tab`).classList.remove('hidden');
-    event.target.classList.add('active');
+    element.classList.add('active');
+
+}
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const activeTab = params.get("tab") || "products"; // default tab fallback
+
+  // Hide all tabs
+  document.querySelectorAll(".admin-tab").forEach(tab => tab.classList.add("hidden"));
+
+  // Show the tab that matches the ?tab=... query
+  const selectedTab = document.getElementById(`${activeTab}-tab`);
+  if (selectedTab) {
+    selectedTab.classList.remove("hidden");
+  }
+
+  // Optional: if you have active tab button classes, update them too
+  document.querySelectorAll(".tab-button").forEach(btn => {
+    btn.classList.remove("active");
+    if (btn.dataset.tab === activeTab) btn.classList.add("active");
+  });
+});
+
+
+function switchTab(tabName) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("tab", tabName);
+    window.location.href = url.toString();
 }
 
-function loadProductsTable() {
-    const tbody = document.querySelector('#products-table tbody');
-    tbody.innerHTML = '';
-    products.forEach(product => {
-        tbody.innerHTML += `
-            <tr>
-                <td>${product.id}</td>
-                <td>${product.name}</td>
-                <td>${product.category}</td>
-                <td>${product.price.toFixed(2)}</td>
-                <td>${product.stock}</td>
-                <td>${product.supermarket}</td>
-                <td>
-                    <button onclick="editProduct(${product.id})">Edit</button>
-                    <button onclick="deleteProduct(${product.id})" class="delete-button">Delete</button>
-                </td>
-            </tr>
-        `;
-    });
-}
+document.getElementById("addUserForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-function showProductForm(isEdit = false) {
-    document.getElementById('product-form-container').classList.remove('hidden');
-    document.getElementById('product-form-title').textContent = isEdit ? 'Edit Product' : 'Add New Product';
-    if (!isEdit) document.getElementById('product-form').reset();
-}
+    const formData = new FormData(this);
+    const userData = Object.fromEntries(formData.entries());
 
-function cancelProductForm() {
-    document.getElementById('product-form-container').classList.add('hidden');
-    document.getElementById('product-form').reset();
-}
-
-function editProduct(id) {
-    const product = products.find(p => p.id === id);
-    if (product) {
-        Object.keys(product).forEach(key => {
-            const element = document.getElementById(`product-${key}`);
-            if (element) element.value = product[key];
+    try {
+        const response = await fetch("/admin/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData)
         });
-        showProductForm(true);
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("User added successfully!");
+            location.reload(); // or dynamically update table
+        } else {
+            alert("Error: " + result.message);
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Server error.");
     }
+});
+
+
+function showUserForm() {
+  const form = document.getElementById("addUserForm");
+  if (form.style.display === "none" || form.style.display === "") {
+    form.style.display = "block";  // Show the form
+  } else {
+    form.style.display = "none";   // Hide the form if already visible (optional toggle behavior)
+  }
 }
 
-function saveProduct(event) {
-    event.preventDefault();
-    const productId = document.getElementById('product-id').value;
-    const newProduct = {
-        id: productId ? parseInt(productId) : products.length + 1,
-        name: document.getElementById('product-name').value,
-        category: document.getElementById('product-category').value,
-        price: parseFloat(document.getElementById('product-price').value),
-        stock: parseInt(document.getElementById('product-stock').value),
-        supermarket: document.getElementById('product-supermarket').value,
-        image: document.getElementById('product-image').value,
-        description: document.getElementById('product-description').value
-    };
 
-    if (productId) {
-        const index = products.findIndex(p => p.id === parseInt(productId));
-        products[index] = newProduct;
-        logAction(`Updated product '${newProduct.name}'`);
+async function deleteUser(userId) {
+  if (!confirm("Are you sure you want to delete this user?")) return;
+
+  try {
+    const response = await fetch(`/admin/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(result.message || "User deleted successfully");
+      // Optionally, remove the user row from the DOM or reload the page:
+      location.reload();
     } else {
-        products.push(newProduct);
-        logAction(`Added new product '${newProduct.name}'`);
+      alert(result.message || "Failed to delete user");
+    }
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    alert("An error occurred. Please try again.");
+  }
+}
+
+
+    function editUser(id) {
+  const form = document.getElementById("editUserForm");
+
+  if (form.style.display === "block") {
+    // If form is already visible, hide it (toggle off)
+    form.style.display = "none";
+    form.reset(); // Optional: clear the form inputs when hiding
+  } else {
+    // If form is hidden, fetch user data and show form
+    fetch(`/admin/users/${id}`)
+      .then(res => res.json())
+      .then(user => {
+        form.style.display = "block";
+        form.id.value = user._id;
+        form.name.value = user.name || "";
+        form.email.value = user.email || "";
+        form.password.value = ""; // leave blank for security
+        form.role.value = user.role || "client";
+      })
+      .catch(err => {
+        console.error("Error fetching user data:", err);
+        alert("Failed to load user data.");
+      });
+  }
+}
+
+
+    document.getElementById("editUserForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const id = form.id.value;
+
+        // Build updatedUser with only non-empty fields
+        const updatedUser = {};
+        if (form.name.value !== "") updatedUser.name = form.name.value;
+        if (form.email.value !== "") updatedUser.email = form.email.value;
+        if (form.password.value !== "") updatedUser.password = form.password.value;
+        if (form.role.value !== "") updatedUser.role = form.role.value;
+
+        const response = await fetch(`/admin/users/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedUser)
+        });
+    console.log("Updated user front end :", updatedUser);
+        const data = await response.json();
+        alert(data.message);
+        location.reload();
+    });
+
+
+
+
+    function showAddMarketForm() {
+    const form = document.getElementById("addMarketForm");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+}
+
+
+function editSupermarket(id) {
+    const form = document.getElementById("editSupermarketForm");
+
+  if (form.style.display === "block") {
+    // If form is already visible, hide it (toggle off)
+    form.style.display = "none";
+    form.reset(); // Optional: clear the form inputs when hiding
+  } else {
+  fetch(`/admin/supermarkets/${id}`)
+    .then(res => res.json())
+    .then(market => {
+      const form = document.getElementById("editSupermarketForm");
+      form.style.display = "block";
+      form.id.value = market._id;
+      form.name.value = market.name || "";
+      form.logo.value = ""; // Clear file input for new upload
+    })
+    .catch(err => alert("Failed to fetch supermarket data"));
+}
+}
+
+// Submit edited supermarket
+document.getElementById("editSupermarketForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const id = form.id.value;
+
+  const formData = new FormData();
+  formData.append("name", form.name.value);
+  if (form.logo.files[0]) {
+    formData.append("logo", form.logo.files[0]);
+  }
+
+  const response = await fetch(`/admin/supermarkets/${id}`, {
+    method: "PUT",
+    body: formData
+  });
+
+  const data = await response.json();
+  alert(data.message);
+  location.reload();
+});
+
+// Delete supermarket
+function deleteSupermarket(id) {
+  if (!confirm("Are you sure you want to delete this supermarket?")) return;
+
+  fetch(`/admin/supermarkets/${id}`, {
+    method: "DELETE"
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+    location.reload();
+  })
+  .catch(() => alert("Failed to delete supermarket"));
+}
+
+function toggleProductForm() {
+  const form = document.getElementById("addProductForm");
+  form.style.display = form.style.display === "none" ? "block" : "none";
+}
+
+ document.getElementById("addProductForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData();
+
+    // Append basic fields
+    formData.append("name", form.name.value);
+    formData.append("description", form.description.value);
+    formData.append("price", form.price.value);
+    formData.append("category", form.category.value);
+    formData.append("stockQuantity", form.stockQuantity.value);
+
+    // Append image
+    if (form.image.files[0]) {
+      formData.append("image", form.image.files[0]);
     }
 
-    loadProductsTable();
-    cancelProductForm();
-    showSuccessMessage(productId ? 'Product updated successfully!' : 'Product added successfully!');
-    updateStats();
+    // Append markets (multiple checkboxes)
+    const selectedMarkets = Array.from(form.querySelectorAll('input[name="markets"]:checked'))
+      .map(checkbox => checkbox.value);
+    selectedMarkets.forEach(id => formData.append("markets", id));
+
+    try {
+      const response = await fetch("/admin/products", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+      alert(result.message);
+      if (response.ok) {
+        location.reload();
+      }
+    } catch (err) {
+      console.error("Error adding product:", err);
+      alert("Failed to add product");
+    }
+  });
+
+  function editProduct(id) {
+  fetch(`/admin/products/${id}`)
+    .then(res => res.json())
+    .then(product => {
+      const form = document.getElementById("editProductForm");
+      form.style.display = form.style.display === "block" ? "none" : "block";
+      form.id.value = product._id;
+      form.name.value = product.name;
+      form.description.value = product.description || "";
+      form.price.value = product.price;
+      form.category.value = product.category || "";
+      form.stockQuantity.value = product.stockQuantity || 0;
+
+      const marketSelect = form.markets;
+      [...marketSelect.options].forEach(option => {
+        option.selected = product.markets.some(m => m._id === option.value);
+      });
+    })
+    .catch(() => alert("Failed to load product data"));
 }
 
 function deleteProduct(id) {
-    if (confirm('Are you sure you want to delete this product?')) {
-        products = products.filter(p => p.id !== id);
-        loadProductsTable();
-        showSuccessMessage('Product deleted successfully!');
-        updateStats();
-    }
+  if (!confirm("Are you sure you want to delete this product?")) return;
+  fetch(`/admin/products/${id}`, {
+    method: "DELETE"
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert(data.message);
+      location.reload();
+    })
+    .catch(() => alert("Error deleting product"));
 }
 
-function loadSupermarketsTable() {
-    const tbody = document.querySelector('#supermarkets-table tbody');
-    tbody.innerHTML = '';
-    supermarkets.forEach(s => {
-        tbody.innerHTML += `
-            <tr>
-                <td>${s.id}</td>
-                <td>${s.name}</td>
-                <td>${s.address}</td>
-                <td>${s.deliveryFee.toFixed(2)}</td>
-                <td>${s.productCount}</td>
-                <td>
-                    <button onclick="editSupermarket(${s.id})">Edit</button>
-                    <button onclick="deleteSupermarket(${s.id})" class="delete-button">Delete</button>
-                </td>
-            </tr>
-        `;
+document.getElementById("editProductForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData();
+
+  // Add only non-empty values
+  if (form.name.value) formData.append("name", form.name.value);
+  if (form.description.value) formData.append("description", form.description.value);
+  if (form.price.value) formData.append("price", form.price.value);
+  if (form.category.value) formData.append("category", form.category.value);
+  if (form.stockQuantity.value) formData.append("stockQuantity", form.stockQuantity.value);
+  if (form.image.files[0]) formData.append("image", form.image.files[0]); // image input
+
+  // Append selected markets (multi-select)
+  const selectedMarkets = Array.from(form.markets.selectedOptions).map(opt => opt.value);
+  selectedMarkets.forEach(marketId => formData.append("markets", marketId));
+
+  const id = form.id.value;
+
+  const response = await fetch(`/admin/products/${id}`, {
+    method: "PUT",
+    body: formData
+  });
+
+  const data = await response.json();
+  alert(data.message);
+  location.reload();
+});
+
+
+ async function updateOrderStatus(orderId, status) {
+  try {
+    const res = await fetch(`/admin/orders/update-status/${orderId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId, status }),
     });
-}
 
-function showSupermarketForm(isEdit = false) {
-    document.getElementById('supermarket-form-container').classList.remove('hidden');
-    document.getElementById('supermarket-form-title').textContent = isEdit ? 'Edit Supermarket' : 'Add New Supermarket';
-    if (!isEdit) document.getElementById('supermarket-form').reset();
-}
+    const data = await res.json();
 
-function cancelSupermarketForm() {
-    document.getElementById('supermarket-form-container').classList.add('hidden');
-    document.getElementById('supermarket-form').reset();
-}
-
-function editSupermarket(id) {
-    const sm = supermarkets.find(s => s.id === id);
-    if (sm) {
-        Object.keys(sm).forEach(key => {
-            const element = document.getElementById(`supermarket-${key}`);
-            if (element) element.value = sm[key];
-        });
-        showSupermarketForm(true);
-    }
-}
-
-function saveSupermarket(event) {
-    event.preventDefault();
-    const id = document.getElementById('supermarket-id').value;
-    const newSupermarket = {
-        id: id ? parseInt(id) : supermarkets.length + 1,
-        name: document.getElementById('supermarket-name').value,
-        address: document.getElementById('supermarket-address').value,
-        logo: document.getElementById('supermarket-logo').value,
-        deliveryFee: parseFloat(document.getElementById('supermarket-delivery-fee').value),
-        description: document.getElementById('supermarket-description').value,
-        productCount: id ? supermarkets.find(s => s.id === parseInt(id)).productCount : 0
-    };
-
-    if (id) {
-        const index = supermarkets.findIndex(s => s.id === parseInt(id));
-        supermarkets[index] = newSupermarket;
-        logAction(`Updated supermarket '${newSupermarket.name}'`);
+    if (res.ok) {
+      alert(data.message);
+      location.reload();
     } else {
-        supermarkets.push(newSupermarket);
-        logAction(`Added new supermarket '${newSupermarket.name}'`);
+      alert('Error: ' + data.message);
     }
-
-    loadSupermarketsTable();
-    loadSupermarketDropdown();
-    cancelSupermarketForm();
-    showSuccessMessage(id ? 'Supermarket updated successfully!' : 'Supermarket added successfully!');
-    updateStats();
+  } catch (err) {
+    alert('Network error');
+  }
 }
 
-function deleteSupermarket(id) {
-    if (confirm('Are you sure you want to delete this supermarket?')) {
-        supermarkets = supermarkets.filter(s => s.id !== id);
-        loadSupermarketsTable();
-        loadProductsTable();
-        showSuccessMessage('Supermarket deleted successfully!');
-        updateStats();
+async function deleteOrder(orderId) {
+  if (!confirm('Are you sure you want to delete this order?')) return;
+
+  try {
+    const res = await fetch(`/admin/orders/remove/${orderId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert(data.message);
+      location.reload();
+    } else {
+      alert('Error: ' + data.message);
     }
+  } catch (err) {
+    alert('Network error');
+  }
 }
 
-function logAction(details) {
-    const now = new Date();
-    logs.unshift({
-        timestamp: now.toISOString().replace('T', ' ').substring(0, 19),
-        user: "admin@homemarket.com",
-        action: "Admin Action",
-        details
-    });
-    loadLogsTable();
-}
-
-function loadLogsTable() {
-    const tbody = document.querySelector('#logs-table tbody');
-    tbody.innerHTML = '';
-    logs.forEach(log => {
-        tbody.innerHTML += `
-            <tr>
-                <td>${log.timestamp}</td>
-                <td>${log.user}</td>
-                <td>${log.action}</td>
-                <td>${log.details}</td>
-            </tr>
-        `;
-    });
-}
-
-function showSuccessMessage(msg) {
-    const el = document.getElementById('success-message');
-    el.textContent = msg;
-    el.style.display = 'block';
-    setTimeout(() => {
-        el.style.display = 'none';
-    }, 3000);
-}
-
-function updateStats() {
-    document.getElementById('total-products').textContent = products.length;
-    document.getElementById('total-supermarkets').textContent = supermarkets.length;
-    document.getElementById('low-stock').textContent = products.filter(p => p.stock < 20).length;
-    document.getElementById('active-orders').textContent = '3';
-}
-
-function loadSupermarketDropdown() {
-    const select = document.getElementById('product-supermarket');
-    select.innerHTML = '<option value="">Select a supermarket</option>';
-    supermarkets.forEach(s => {
-        const option = document.createElement('option');
-        option.value = s.name;
-        option.textContent = s.name;
-        select.appendChild(option);
-    });
-}
