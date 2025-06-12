@@ -1,0 +1,65 @@
+/* Supermarket Carousel Styles */
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.carousel-arrow {
+    background-color: #fff;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+.carousel-arrow:hover {
+    background-color: #eee;
+}
+
+.carousel-window {
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.3s ease;
+    gap: 10px;
+}
+
+.supermarket {
+    min-width: 180px;
+    flex-shrink: 0;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.supermarket:hover {
+    transform: scale(1.05);
+}
+
+.supermarket img {
+    max-width: 100px;
+    height: auto;
+}
+#video-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1710px;
+  height: 1000px;
+  z-index: -1;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}

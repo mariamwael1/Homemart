@@ -1,0 +1,63 @@
+#bg-video {
+  width: 1750px;
+  height: 1000px;
+  position: fixed;
+  display: flex;
+  margin: 0 auto;
+  z-index: -1;
+}
+
+.home-header {
+  background: radial-gradient(circle at 30% 30%, rgb(240, 73, 101), orange, rgb(240, 73, 101));
+  padding: 40px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 10px white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-header .logo {
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+}
+
+.login-button {
+  padding: 10px 20px;
+  background-color: white;
+  color: #ff3366;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #ffe6ec;
+}
+
+#video-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1710px;
+  height: 1000px;
+  z-index: -1;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  bottom: 225px;
+  color: rgb(234, 88, 3);
+  padding-top: 20vh;
+}
