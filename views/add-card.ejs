@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Credit Card - Home Mart</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/add-card.css" />
+  <script src="/js/main.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1 id="page-title">
+      <i class="fa-solid fa-basket-shopping"></i> Home Mart
+    </h1>
+    <%- include('partials/navbar') %>
+  </header>
+
+  <main class="card-form-wrapper">
+    <% if (session.error) { %>
+  <div class="alert error"><%= session.error %></div>
+  <% session.error = null; %>
+<% } %>
+
+<% if (session.success) { %>
+  <div class="alert success"><%= session.success %></div>
+  <% session.success = null; %>
+<% } %>
+    <h2>Add a Credit Card</h2>
+    <form action="/add-card" method="POST" class="card-form">
+      <div class="form-group">
+        <label for="nameOnCard">Name on Card</label>
+        <input type="text" name="nameOnCard" id="nameOnCard" required>
+      </div>
+
+      <div class="form-group">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" name="cardNumber" id="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required>
+      </div>
+
+      <div class="form-group-row">
+        <div class="form-group">
+          <label for="expiryMonth">Expiry Month</label>
+          <input type="text" name="expiryMonth" id="expiryMonth" maxlength="2" placeholder="MM" required>
+        </div>
+
+        <div class="form-group">
+          <label for="expiryYear">Expiry Year</label>
+          <input type="text" name="expiryYear" id="expiryYear" maxlength="4" placeholder="YYYY" required>
+        </div>
+      </div>
+
+      <button type="submit" class="save-card-btn">Save Card</button>
+    </form>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart - Home Mart</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/cart.css" />
+  <script src="/js/cart.js" defer></script>
+  <script src="/js/main.js" defer></script>
+
+</head>
+<body>
+   <%- include('partials/navbar') %>
+   
+
+
+
+  <main>
+    <h2>Your Cart</h2>
+
+    <% if (cartItems.length === 0) { %>
+      <p>Your cart is empty.</p>
+    <% } else { %>
+     <% let totalPrice = 0; %>
+<table class="cart-table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price (EGP)</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% cartItems.forEach(item => { 
+         const productId = item.productId && item.productId._id ? item.productId._id : item.productId;
+         const subtotal = item.quantity * item.priceAtAddTime;
+         totalPrice += subtotal;
+    %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= item.priceAtAddTime %></td>
+        <td>
+          <input type="number" min="1" value="<%= item.quantity %>" onchange="updateQuantity('<%=  productId %>', this.value)">
+        </td>
+        <td><%= subtotal.toFixed(2) %> EGP</td>
+        <td><button onclick="removeFromCart('<%= productId %>')">Remove</button></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<!-- Total Section -->
+<div class="cart-total">
+  <h3>Total: <%= totalPrice.toFixed(2) %> EGP</h3>
+</div>
+
+      <a href="/checkout">
+        <button class="checkout-btn">Proceed to Checkout</button>
+      </a>
+    <% } %>
+  </main>
+  <video autoplay muted loop playsinline id="video-section">
+  <source src="/images/video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+  <%- include('partials/footer') %>
+</body>
+</html>

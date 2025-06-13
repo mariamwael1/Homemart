@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Home Market</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/lang.js" defer></script>
+    <script src="/js/admin.js" defer></script>
+    <script src="/js/main.js" defer></script>
+</head>
+<body>
+
+   <%- include('partials/navbar') %>
+   
+
+
+    <main class="admin-container">
+         <% if (error) { %>
+          <div id="alert" class="alert error"><%= error %></div>
+        <% } %>
+
+        <% if (success) { %>
+          <div id="alert" class="alert success"><%= success %></div>
+        <% } %>
+
+        <section class="admin-section">
+            <h2>Admin Dashboard</h2>
+            <div class="admin-actions">
+                <button class="tab-button" onclick="switchTab('products')">Products</button>
+                <button class="tab-button" onclick="switchTab('supermarkets')">Supermarkets</button>
+                <button class="tab-button" onclick="switchTab('users')">Users</button>
+                <button class="tab-button" onclick="switchTab('orders')">Orders</button>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="products-tab" class="admin-tab hidden">
+                <div class="tab-actions">
+                    <button class="action-button" onclick="toggleProductForm()">Add New Product</button>
+                </div>
+
+                <!-- Add Product Form -->
+                <form id="addProductForm" enctype="multipart/form-data" style="display: none;">
+                <input type="text" name="name" placeholder="Product Name" required />
+                <textarea name="description" placeholder="Description"></textarea>
+                <input type="number" name="price" placeholder="Price" required step="0.01" />
+                <input type="text" name="category" placeholder="Category" />
+                <input type="number" name="stockQuantity" placeholder="Stock Quantity" />
+
+                <!-- Image Upload -->
+                <input type="file" name="image" accept="image/*" required />
+
+                <!-- Markets Checkboxes -->
+                <div id="marketOptions">
+                    <% supermarkets.forEach(market => { %>
+                    <label>
+                        <input type="checkbox" name="markets" value="<%= market._id %>" />
+                        <%= market.name %>
+                    </label>
+                    <% }) %>
+                </div>
+
+                <button type="submit">Add Product</button>
+                </form>
+
+               <form id="editProductForm" style="display: none;" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="id">
+                <input type="text" name="name" placeholder="Name" required>
+                <textarea name="description" placeholder="Description"></textarea>
+                <input type="number" name="price" placeholder="Price" required>
+                <input type="text" name="category" placeholder="Category">
+                <input type="number" name="stockQuantity" placeholder="Stock Quantity">
+                <select name="markets" multiple>
+                <% supermarkets.forEach(m => { %>
+                <option value="<%= m._id %>"><%= m.name %></option>
+                <% }) %>
+                </select>
+                <input type="file" name="image">
+                <button type="submit">Update Product</button>
+                </form>
+
+
+                <!-- Products Table -->
+                <table class="admin-table" id="products-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Supermarket</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% products.forEach((product, index) => { %>
+                        <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= product.name %></td>
+                        <td>$<%= product.price.toFixed(2) %></td>
+                        <td>
+                        <% if (product.markets && product.markets.length > 0) { %>
+                            <%= product.markets.map(m => m.name).join(', ') %>
+                        <% } else { %>
+                            N/A
+                        <% } %>
+                        </td>
+                        <td>
+                            <% if (product.imageUrl) { %>
+                            <img src="<%= product.imageUrl %>" alt="<%= product.name %>" style="width: 50px;" />
+                            <% } else { %>
+                            No Image
+                            <% } %>
+                        </td>
+                        <td>
+                            <button onclick="editProduct('<%= product._id %>')">Edit</button>
+                            <button onclick="deleteProduct('<%= product._id %>')">Delete</button>
+                        </td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+                 <div class="pagination">
+                    <% for (let i = 1; i <= totalProductsPages; i++) { %>
+                         <a href="/admin?tab=products&productsPage=<%= i %>"
+                        class="<%= i === productsPage ? 'active' : '' %>">
+                            <%= i %>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+            </div>
+
+            <!-- Supermarkets Tab -->
+            <div id="supermarkets-tab" class="admin-tab hidden">
+                <div class="tab-actions">
+                    <button class="action-button" onclick="showAddMarketForm()">Add New Supermarket</button>
+                </div>
+                    <form id="addMarketForm" style="display: none;" enctype="multipart/form-data" method="POST" action="/admin/supermarkets">
+                        <input type="text" name="name" placeholder="Market Name" required />
+                        <input type="file" name="image" accept="image/*" required />
+                        <button type="submit">Add Market</button>
+                    </form>
+                    <form id="editSupermarketForm" style="display:none;" enctype="multipart/form-data">
+                    <input type="hidden" name="id" />
+                    <input type="text" name="name" placeholder="Supermarket Name" required />
+                    <input type="file" name="logo" accept="image/*" />
+                    <button type="submit">Update Supermarket</button>
+                    </form>
+                    <table class="admin-table" id="supermarkets-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% supermarkets.forEach((market, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= market.name %></td>
+                        <td>
+                            <% if (market.logo) { %>
+                             <img src="images/<%= market.logo %>" alt="<%= market.name %>" style="width: 50px; height: auto;" />
+                            <% } else { %>
+                                No image
+                            <% } %>
+                        </td>
+                        <td>
+                            <button onclick="editSupermarket('<%= market._id %>')">Edit</button>
+                            <button onclick="deleteSupermarket('<%= market._id %>')">Delete</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <div class="pagination">
+                    <% for (let i = 1; i <= totalSupermarketsPages; i++) { %>
+                         <a href="/admin?tab=supermarkets&supermarketsPage=<%= i %>"
+                        class="<%= i === supermarketsPage ? 'active' : '' %>">
+                            <%= i %>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div id="users-tab" class="admin-tab hidden">
+                        <div class="tab-actions">
+                    <button class="action-button" onclick="showUserForm()">Add New User</button>
+                </div>
+
+                <form id="addUserForm" style="display:none;">
+                    <input type="text" name="name" placeholder="Name" required />
+                    <input type="email" name="email" placeholder="Email" required />
+                    <input type="password" name="password" placeholder="Password" required />
+                    <select name="role" required>
+                        <option value="admin">Admin</option>
+                        <option value="client">Client</option>
+                    </select>
+                    <button type="submit">Add User</button>
+                </form>
+
+                <form id="editUserForm" style="display:none;">
+                    <input type="hidden" name="id" />
+                    <input type="text" name="name" placeholder="Name"  />
+                    <input type="email" name="email" placeholder="Email"  />
+                    <input type="password" name="password" placeholder="Password"  />
+                    <select name="role" required>
+                        <option value="admin">Admin</option>
+                        <option value="customer">Customer</option>
+                    </select>
+                    <button type="submit">Update User</button>
+                </form>
+                <table class="admin-table" id="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach((user, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= user.name %></td>
+                                <td><%= user.email %></td>
+                                <td><%= user.role %></td>
+                                <td>
+                                    <button onclick="editUser('<%= user._id %>')">Edit</button>
+                                    <button onclick="deleteUser('<%= user._id %>')">Delete</button>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                 <!-- Pagination Controls -->
+                <div class="pagination">
+                    <% for (let i = 1; i <= totalUsersPages; i++) { %>
+                         <a href="/admin?tab=users&usersPage=<%= i %>"
+                        class="<%= i === usersPage ? 'active' : '' %>">
+                            <%= i %>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+
+                <div id="orders-tab" class="admin-tab hidden">
+                    <h2>Manage Orders</h2>
+
+                    <% if (orders.length > 0) { %>
+                    <table class="admin-table" id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Items</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% orders.forEach((order, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= order.userId.name %> (<%= order.userId.email %>)</td>
+                                <td><%= new Date(order.createdAt).toLocaleDateString() %></td>
+                                <td><%= order.status %></td>
+                                <td><%= order.totalAmount.toFixed(2) %> EGP</td>
+                                <td>
+                                    <ul>
+                                        <% order.products.forEach(p => { %>
+                                            <li><%= p.name %> x <%= p.quantity %> @ <%= p.priceAtPurchase.toFixed(2) %> EGP</li>
+                                        <% }) %>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div style="display: inline-block;">
+                                    <select id="status-<%= order._id %>">
+                                        <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                        <option value="shipped" <%= order.status === 'shipped' ? 'selected' : '' %>>Shipped</option>
+                                        <option value="delivered" <%= order.status === 'delivered' ? 'selected' : '' %>>Delivered</option>
+                                        <option value="cancelled" <%= order.status === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                    </select>
+                                    <button onclick="updateOrderStatus('<%= order._id %>', document.getElementById('status-<%= order._id %>').value)">Update</button>
+                                    </div>
+                              <% if (order.status !== 'cancelled' && order.status !== 'delivered') { %>
+                                <button 
+                                    onclick="deleteOrder('<%= order._id %>')" 
+                                    class="action-button cancel-button" 
+                                    style="margin-left: 5px;">
+                                    Cancel
+                                </button>
+                                <% } %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+
+                    <% } else { %>
+                        <p>No orders found.</p>
+                    <% } %>
+                     <div class="pagination">
+                    <% for (let i = 1; i <= totalOrdersPages; i++) { %>
+                         <a href="/admin?tab=orders&ordersPage=<%= i %>"
+                        class="<%= i === ordersPage ? 'active' : '' %>">
+                            <%= i %>
+                        </a>
+                    <% } %>
+                </div>
+                </div>
+    </main>
+  <%- include('partials/footer') %>
+</body>
+</html>

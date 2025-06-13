@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Home Market</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/login.css" />
+  <script src="/js/main.js" defer></script>
+
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    rel="stylesheet"
+  />
+
+
+</head>
+<body>
+ 
+   <%- include('partials/navbar') %>
+
+
+
+  <main>
+    
+    <div class="login-container">
+      <h2>Login to Your Account</h2>
+      <% if (error) { %>
+        <div id="alert" class="alert error"><%= error %></div>
+      <% } %>
+      <form id="login-form" method="POST" action="/login">
+        <div class="form-group">
+          <label for="email">Email or Username</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Enter your email or username"
+            required
+          />
+        </div>
+
+        <div class="form-group password-wrapper">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+          <button type="button" id="toggle-password">👁</button>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+        <p>
+          Don't have an account?
+          <a href="/register">Register here</a>
+        </p>
+      </form>
+    </div>
+  </main>
+ <video autoplay muted loop playsinline id="video-section">
+  <source src="/images/video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+   <%- include('partials/footer') %>
+ 
+    <script src="/js/password-toggle.js" defer></script>
+</body>
+
+
+</html>
