@@ -35,6 +35,7 @@
   <tbody>
     <% cartItems.forEach(item => { 
          const subtotal = item.quantity * item.priceAtAddTime;
+         const productId = item.productId._id || item.productId;
          totalPrice += subtotal;
     %>
       <tr>
