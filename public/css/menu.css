@@ -8,7 +8,7 @@
   width: 100%;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  background: radial-gradient(circle at 30% 30%, #f04965 0%, orange 50%, #f04965 100%);
+  background: rgba(255 255 255 / 0.25);
   border-bottom: 1.5px solid rgba(186, 178, 204, 0.45);
   box-shadow: 0 8px 30px rgba(102, 93, 138, 0.1);
   z-index: 1000;
