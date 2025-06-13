@@ -39,7 +39,18 @@ router.get("/shop", async (req, res) => {
 router.get('/cart', auth.isLoggedIn, async (req, res) => {
   try {
     const user = await User.findById(req.session.user._id).populate('cart.productId');
-    res.render('cart', { cartItems: user.cart });
+
+    // Filter out cart items where the product no longer exists (i.e., null after populate)
+    const cleanedCart = user.cart.filter(item => item.productId !== null);
+
+    // If cleanup happened, save the user document
+    if (cleanedCart.length !== user.cart.length) {
+      user.cart = cleanedCart;
+      await user.save();
+    }
+
+    res.render('cart', { cartItems: cleanedCart });
+
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
