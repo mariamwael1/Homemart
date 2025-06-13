@@ -34,6 +34,7 @@
   </thead>
   <tbody>
     <% cartItems.forEach(item => { 
+         const productId = item.productId && item.productId._id ? item.productId._id : item.productId;
          const subtotal = item.quantity * item.priceAtAddTime;
          totalPrice += subtotal;
     %>
@@ -41,10 +42,10 @@
         <td><%= item.name %></td>
         <td><%= item.priceAtAddTime %></td>
         <td>
-          <input type="number" min="1" value="<%= item.quantity %>" onchange="updateQuantity('<%= item.productId._id || item.productId %>', this.value)">
+          <input type="number" min="1" value="<%= item.quantity %>" onchange="updateQuantity('<%=  productId %>', this.value)">
         </td>
         <td><%= subtotal.toFixed(2) %> EGP</td>
-        <td><button onclick="removeFromCart('<%= item.productId._id || item.productId %>')">Remove</button></td>
+        <td><button onclick="removeFromCart('<%= productId %>')">Remove</button></td>
       </tr>
     <% }) %>
   </tbody>

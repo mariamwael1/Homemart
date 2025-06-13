@@ -304,6 +304,10 @@ const deleteProduct  = async (req, res) => {
       });
     }
 
+    await User.updateMany(
+      { 'cart.productId': id },
+      { $pull: { cart: { id } } }
+    );
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (err) {
     console.error("Error deleting product:", err);
