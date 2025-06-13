@@ -305,8 +305,8 @@ const deleteProduct  = async (req, res) => {
     }
 
     await User.updateMany(
-      { 'cart.productId': productId },
-      { $pull: { cart: { productId } } }
+      { 'cart.productId': id },
+      { $pull: { cart: { id } } }
     );
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (err) {
