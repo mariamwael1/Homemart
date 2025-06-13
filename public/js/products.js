@@ -5,24 +5,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let selectedCategory = "all";
   let selectedMarket = "all";
+  let searchKeyword = "";
 
-  const filterProducts = () => {
+const filterProducts = () => {
+  productCards.forEach(card => {
+    const cardCategory = card.getAttribute("data-category");
+    const name = card.querySelector("h3").innerText.toLowerCase();
+    const desc = card.querySelector("p").innerText.toLowerCase();
+    const marketText = card.querySelector("small").innerText;
+    const marketList = marketText.replace("From:", "").split(",").map(m => m.trim().toLowerCase());
 
-    productCards.forEach(card => {
-      const cardCategory = card.getAttribute("data-category");
-      const marketText = card.querySelector("small").innerText; // e.g. "From: Seoudi , Mahmoud el far"
+    const matchCategory = selectedCategory === "all" || cardCategory === selectedCategory;
+    const matchMarket = selectedMarket === "all" || marketList.includes(selectedMarket);
+    const matchSearch = name.includes(searchKeyword) || desc.includes(searchKeyword);
 
-      // Parse markets properly
-      const marketList = marketText
-        .replace("From:", "")
-        .split(",")
-        .map(m => m.trim().toLowerCase());
-
-      const matchCategory = selectedCategory === "all" || cardCategory === selectedCategory;
-      const matchMarket = selectedMarket === "all" || marketList.includes(selectedMarket.toLowerCase());
-      card.style.display = (matchCategory && matchMarket) ? "block" : "none";
-    });
-  };
+    card.style.display = (matchCategory && matchMarket && matchSearch) ? "block" : "none";
+  });
+};
 
   // CATEGORY LISTENER
   if (categoryItems.length > 0) {
@@ -43,7 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedMarket = e.target.value.trim().toLowerCase(); // normalize
     filterProducts();
   });
-
+document.getElementById("search-input").addEventListener("input", (e) => {
+  searchKeyword = e.target.value.trim().toLowerCase();
+  console.log("Search:", searchKeyword);
+  filterProducts();
+});
 });
 
 
@@ -90,4 +93,6 @@ async function addToCart(productId) {
     alert("Error adding to cart");
   }
 }
+
+
 
