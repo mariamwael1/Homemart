@@ -125,22 +125,26 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .nav-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+.navbar {
+    padding: 10px 20px;
   }
 
-  .nav-links {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+.nav-container,
+.nav-links {
+    flex-wrap: wrap;
     gap: 12px;
   }
 
-  .nav-links a,
-  #language-selector,
-  .dark-toggle-btn {
-    width: 100%;
+.nav-links {
+    flex-direction: row;
+    align-items: center;
+  }
+
+.nav-links a,
+#language-selector,
+.dark-toggle-btn {
+    flex: 0 1 auto;
+    width: auto;
+    padding: 6px 10px; /* smaller buttons */
   }
 }
