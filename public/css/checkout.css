@@ -1,5 +1,5 @@
 body {
-  background: #777777d7;
+  background: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
@@ -13,7 +13,7 @@ body {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.721);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-radius: 18px;
@@ -25,7 +25,7 @@ body {
 .checkout-container h2,
 .checkout-container h3 {
   text-align: center;
-  color: #f0eaff;
+  color: black;
   margin-bottom: 1.5rem;
 }
 
@@ -38,7 +38,7 @@ body {
 .checkout-container label {
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #d5cfff;
+  color: black;
 }
 
 .checkout-container input[type="radio"] {
