@@ -8,11 +8,11 @@
   width: 100%;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  background: rgba(255 255 255 / 0.25);
+  background:radial-gradient(circle at 30% 30%, #f04965 0%, orange 50%, #f04965 100%);
   border-bottom: 1.5px solid rgba(186, 178, 204, 0.45);
   box-shadow: 0 8px 30px rgba(102, 93, 138, 0.1);
   z-index: 1000;
-  padding: 18px 40px;
+  padding: 22px 40px;
   user-select: none;
   font-family: 'Inter', sans-serif;
   transition: background 0.3s ease;
@@ -31,7 +31,7 @@
 .logo {
   font-size: 22px;
   font-weight: 700;
-  color: #7b6ca0; /* soft purple */
+  color: #e3ddf2; /* soft purple */
   text-decoration: none;
   letter-spacing: 0.06em;
   text-shadow: 0 0 6px rgba(123, 108, 160, 0.6);
@@ -39,7 +39,7 @@
 }
 
 .logo:hover {
-  color: #a295cc;
+  color: #f88b51;
   text-shadow: 0 0 12px rgba(162, 149, 204, 0.85);
 }
 
@@ -54,7 +54,7 @@
 .nav-links a {
   text-decoration: none;
   font-size: 15px;
-  color: #665d8a; /* muted purple */
+  color: #e3ddf2; /* muted purple */
   padding: 10px 16px;
   border-radius: 12px;
   font-weight: 600;
@@ -76,7 +76,7 @@
 /* Language dropdown */
 #language-selector {
   background: rgba(186, 178, 204, 0.2);
-  color: #665d8a;
+  color:#e3ddf2;
   border: 1.2px solid rgba(123, 108, 160, 0.6);
   padding: 8px 12px;
   border-radius: 12px;
@@ -100,7 +100,7 @@
 
 /* Dark mode toggle button */
 .dark-toggle-btn {
-  background: linear-gradient(135deg, #7b6ca0, #a295cc);
+  background: gray;
   color: #ece9ff;
   border: none;
   padding: 10px;
@@ -125,22 +125,26 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .nav-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+.navbar {
+    padding: 10px 20px;
   }
 
-  .nav-links {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+.nav-container,
+.nav-links {
+    flex-wrap: wrap;
     gap: 12px;
   }
 
-  .nav-links a,
-  #language-selector,
-  .dark-toggle-btn {
-    width: 100%;
+.nav-links {
+    flex-direction: row;
+    align-items: center;
+  }
+
+.nav-links a,
+#language-selector,
+.dark-toggle-btn {
+    flex: 0 1 auto;
+    width: auto;
+    padding: 6px 10px; /* smaller buttons */
   }
 }
