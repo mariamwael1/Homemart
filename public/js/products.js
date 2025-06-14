@@ -67,6 +67,10 @@ async function addToCart(productId) {
       alert(`Only ${product.stockQuantity} in stock. Please adjust quantity.`);
       return;
     }
+    if(qty<1){
+      alert(`Quantity must be more than zero. Please adjust quantity.`);
+      return;
+    }
     // Proceed with adding to cart
     const res = await fetch('/add-to-cart', {
       method: 'POST',
