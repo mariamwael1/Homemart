@@ -1,5 +1,4 @@
 body {
-  background: #777777d7;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding-top: 30px;
@@ -11,7 +10,6 @@ body {
   margin: 5rem auto 2rem auto;
   border-collapse: separate;
   border-spacing: 0 14px;
-  background: #fafafa; /* Calm low-light white */
   border-radius: 18px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   border: 1.5px solid #ddd;
@@ -130,7 +128,10 @@ button.checkout-btn {
   transition: all 0.3s ease;
   font-weight: 700;
   user-select: none;
+  width: 300px;
+ height: 60px;
 }
+
 
 button.checkout-btn:hover,
 button.checkout-btn:focus {
@@ -214,4 +215,23 @@ button.checkout-btn:focus {
     padding: 1rem;
     font-size: 1.2rem;
   }
+}
+#video-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1710px;
+  height: 1000px;
+  z-index: -1;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+#bg-video {
+  width: 1750px;
+  height: 1000px;
+  position: fixed;
+  display: flex;
+  margin: 0 auto;
+  z-index: -1;
 }
