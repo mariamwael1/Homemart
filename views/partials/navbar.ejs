@@ -1,0 +1,34 @@
+<!-- Load CSS and JS -->
+<link rel="stylesheet" href="/css/menu.css" />
+<script src="/js/lang.js" defer></script>
+
+<header class="navbar">
+  <div class="nav-container">
+    <a href="/" class="logo">🏠 HomeMarket</a>
+
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/shop">Shop</a>
+
+      <% if (user && user.role === 'admin') { %>
+        <a href="/admin">Dashboard</a>
+      <% } %>
+
+      <% if (user) { %>
+        <a href="/profile">Profile</a>
+        <a href="/cart">Cart</a>
+        <a href="/logout">Logout</a>
+      <% } else { %>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+      <% } %>
+
+      <select id="language-selector" onchange="changeLanguage()">
+        <option value="en">EN</option>
+        <option value="ar">AR</option>
+      </select>
+
+      <button id="darkModeToggle" class="dark-toggle-btn">🌙</button>
+    </nav>
+  </div>
+</header>

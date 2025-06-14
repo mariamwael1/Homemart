@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Market</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="./js/main.js" defer></script>
+    <script src="./js/index.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+</head>
+</html>
+
+   <%- include('partials/navbar') %>
+    <main>
+  <% if (error) { %>
+            <div id="alert" class="alert error"><%= error %></div>
+            <% } %>
+
+ 
+        <button id="back-button" onclick="showSupermarkets()" class="hidden">← Back</button>
+          
+                <section id="supermarket-list">
+            <h2>Order Now</h2>
+            <div class="carousel-controls">
+                <button id="prev-btn" class="carousel-arrow"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-window">
+                    <div class="carousel-track">
+                        <% supermarkets.forEach(market => { %>
+                            <div class="supermarket" onclick="showProducts('<%= market.name %>')">
+                                <img src="/images/<%= market.logo %>" alt="<%= market.name %> Logo">
+                                <h3><%= market.name %></h3>
+                                <div class="rating">⭐⭐⭐⭐☆</div>
+                                <div class="reviews">📝 100+ reviews</div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+                <button id="next-btn" class="carousel-arrow"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+        <section id="product-list" class="hidden">
+            <h2 id="supermarket-name"></h2>
+            <div id="products-container"></div>
+        </section>
+    </main>
+   <video autoplay muted loop playsinline id="video-section">
+  <source src="/images/video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+   <%- include('partials/footer') %>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 180px 0 0 0;
+  background: linear-gradient(to right, #ffffff, #f7f7f7, #d4d4d4);
+  color: #333;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products - Home Mart</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <script src="/js/products.js" defer></script>
+  <script src="/js/main.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+   <%- include('partials/navbar') %>
+   
+
+
+
+  <main class="product-page">
+    <aside class="sidebar">
+      <h3>Categories</h3>
+      <ul id="category-list">
+        <li data-category="all" class="active">All</li>
+        <% categories.forEach(category => { %>
+          <li data-category="<%= category %>"><%= category %></li>
+        <% }) %>
+      </ul>
+    </aside>
+
+    <section class="products-section">
+      <h2>All Products</h2>
+            <div class="product-filters">
+        <label for="market-filter">Filter by Supermarket:</label>
+        <select id="market-filter">
+          <option value="all">All Supermarkets</option>
+          <% markets.forEach(market => { %>
+            <option value="<%= market.name %>"><%= market.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div id="product-container" class="product-grid">
+        <% products.forEach(product => { %>
+        <div class="product-card" data-category="<%= product.category %>">
+          <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+          <h3><%= product.name %></h3>
+          <p><%= product.price %> EGP</p>
+
+          <% if (product.stockQuantity > 0) { %>
+            <div class="cart-actions">
+              <input type="number" min="1" value="1" id="qty-<%= product._id %>">
+              <button onclick="addToCart('<%= product._id %>')">Add to Cart</button>
+            </div>
+          <% } else { %>
+            <p class="out-of-stock">Out of Stock</p>
+          <% } %>
+
+          <small>From: <%= product.markets.map(m => m.name).join(' , ') %></small>
+        </div>
+      <% }) %>
+
+      </div>
+    </section>
+  </main>
+   <%- include('partials/footer') %>
+
+</body>
+</html>
