@@ -1,8 +1,7 @@
 .profile-container {
   max-width: 1000px;
-  margin: 100px auto 50px; /* pushed down for navbar */
+  margin: 10px auto 50px; /* pushed down for navbar */
   padding: 20px;
-  background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -28,7 +27,7 @@
 .tab-btn.active {
   border-bottom: 3px solid orange;
   font-weight: bold;
-  color: #f04965;
+  color: rgb(255, 186, 58);
 }
 
 .tab-content {
@@ -65,7 +64,7 @@ form button {
 }
 
 form button:hover {
-  background: #d13d56;
+  background:rgb(255, 186, 58);
 }
 
 table {
@@ -91,4 +90,23 @@ table th {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+#video-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1710px;
+  height: 1000px;
+  z-index: -1;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+#bg-video {
+  width: 1750px;
+  height: 1000px;
+  position: fixed;
+  display: flex;
+  margin: 0 auto;
+  z-index: -1;
 }
