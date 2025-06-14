@@ -85,6 +85,7 @@ const qty = parseInt(document.getElementById(`qty-${productId}`).value, 10);
     if (res.status === 401) {
       const data = await res.json(); // Now it's JSON
       alert(data.message || "You are not logged in.");
+      window.location.href = '/login';
       return;
     }
     const data = await res.json();
