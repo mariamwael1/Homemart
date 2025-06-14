@@ -52,7 +52,8 @@ document.getElementById("search-input").addEventListener("input", (e) => {
 
 
 async function addToCart(productId) {
-  const qty = parseInt(document.getElementById(`qty-${productId}`).value) || 1;
+const qty = parseInt(document.getElementById(`qty-${productId}`).value, 10);
+
 
   try {
     const productRes = await fetch(`/product/${productId}`);
