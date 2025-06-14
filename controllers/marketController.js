@@ -19,6 +19,9 @@ const addToCart = async (req, res) => {
     if (!product || product.stockQuantity < quantity) {
       return res.status(400).json({ message: 'Insufficient stock available' });
     }
+if(quantity<1){
+  return res.status(400).json({ message: "Quantity must be more than" });
+}
     if (existingItem) {
       existingItem.quantity += parseInt(quantity);
     } else {
