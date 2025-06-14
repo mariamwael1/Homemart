@@ -229,7 +229,9 @@ if (
 ) {
   return res.status(400).json({ message: "All fields except 'markets' are required and must be valid" });
 }
-
+if(stockQuantity<0){
+  return res.status(400).json({ message: "Quantity can't be less than zero" });
+}
     const newProduct = new Product({
       name,
       description,
@@ -263,6 +265,9 @@ if (
   stockQuantity === undefined || isNaN(stockQuantity)
 ) {
   return res.status(400).json({ message: "All fields except 'markets' are required and must be valid" });
+}
+if(stockQuantity<0){
+  return res.status(400).json({ message: "Quantity can't be less than zero" });
 }
     const product = await Product.findById(id);
     if (!product) return res.status(404).json({ message: "Product not found" });
