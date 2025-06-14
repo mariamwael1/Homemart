@@ -36,6 +36,7 @@
             <option value="<%= market.name %>"><%= market.name %></option>
           <% }) %>
         </select>
+        <input type="text" id="search-input" placeholder="Search products..." />
       </div>
       <div id="product-container" class="product-grid">
         <% products.forEach(product => { %>
