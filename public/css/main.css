@@ -80,7 +80,11 @@ body.dark-mode .register-wrapper{
   color: #f0f0f0 !important;
 }
 body.dark-mode #video-section{
-    filter: brightness(0.5) contrast(1.2);
+   display: none;
+}
+body.dark-mode .navbar {
+  background: #121212; /* or a dark gradient if you prefer */
+  color: #fff;
 }
 /* Sidebar and navigation */
 body.dark-mode .sidebar,
