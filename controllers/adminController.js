@@ -13,7 +13,12 @@ const AddUser = async (req, res) => {
   const { name, email, password, role } = req.body;
 
   // 1. Validate fields
-  if ( !email || !name || !password || !role) {
+  if (
+  !email?.trim() ||
+  !name?.trim() ||
+  !password?.trim() ||
+  !role?.trim()
+) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -52,6 +57,14 @@ const AddUser = async (req, res) => {
 const editUser = async (req, res) => {
   const { name, email, password, role } = req.body;
   const { id } = req.params; // <-- Make sure you’re using req.params, not req.body
+ if (
+  !email?.trim() ||
+  !name?.trim() ||
+  !password?.trim() ||
+  !role?.trim()
+) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
 
   try {
     const user = await User.findById(id); // <-- use req.params.id
@@ -132,6 +145,12 @@ const upload = multer({
 const addMarket = async (req, res) => {
   try {
     const { name } = req.body;
+ if (
+  !name?.trim() 
+) {
+      req.session.error = "Market name field is required.";
+      return res.redirect("/admin");
+  }
 
     if (!req.file) {
       return res.status(400).send("Image is required");
@@ -165,6 +184,11 @@ const editSupermarket = async (req, res) => {
   try {
     const market = await Supermarket.findById(req.params.id);
     if (!market) return res.status(404).json({ message: "Supermarket not found" });
+     if (
+  !req.body.name?.trim() 
+) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
 
     if (req.body.name) market.name = req.body.name;
 
@@ -196,6 +220,16 @@ const addProduct = async (req, res) => {
     const { name, description, price, category, stockQuantity, markets } = req.body;
     const imageUrl = req.file ? `/images/uploads/${req.file.filename}` : "";
 
+if (
+  !name?.trim() ||
+  !description?.trim() ||
+  price === undefined || isNaN(price) ||
+  !category?.trim() ||
+  stockQuantity === undefined || isNaN(stockQuantity)
+) {
+  return res.status(400).json({ message: "All fields except 'markets' are required and must be valid" });
+}
+
     const newProduct = new Product({
       name,
       description,
@@ -221,7 +255,15 @@ const editProduct = async (req, res) => {
     const { id } = req.params;
     const { name, description, price, category, stockQuantity, markets } = req.body;
     const imageUrl = req.file ? `/images/uploads/${req.file.filename}` : undefined;
-
+if (
+  !name?.trim() ||
+  !description?.trim() ||
+  price === undefined || isNaN(price) ||
+  !category?.trim() ||
+  stockQuantity === undefined || isNaN(stockQuantity)
+) {
+  return res.status(400).json({ message: "All fields except 'markets' are required and must be valid" });
+}
     const product = await Product.findById(id);
     if (!product) return res.status(404).json({ message: "Product not found" });
 
@@ -262,6 +304,10 @@ const deleteProduct  = async (req, res) => {
       });
     }
 
+    await User.updateMany(
+      { 'cart.productId': id },
+      { $pull: { cart: { id } } }
+    );
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (err) {
     console.error("Error deleting product:", err);
